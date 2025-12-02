@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cabaña Los Pelaitos | Refugio Natural</title>
+    
+    <!-- 1. TAILWIND CSS (Diseño) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. FUENTES (Tipografía Premium) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- 3. CONFIGURACIÓN DE ESTILOS -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        emerald: {
+                            950: '#022c22',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- 4. ICONOS LUCIDE -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Estilos base para scrollbar y selección */
+        ::selection { background-color: #a7f3d0; color: #022c22; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f5f5f4; }
+        ::-webkit-scrollbar-thumb { background: #064e3b; border-radius: 4px; }
+        .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
+        .fade-enter { opacity: 0; }
+        .fade-enter-active { opacity: 1; transition: opacity 1000ms; }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 antialiased selection:bg-emerald-200 selection:text-emerald-950">
+
+    <!-- NAVBAR -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-6 bg-transparent">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <!-- LOGO SVG -->
+            <a href="#" class="cursor-pointer group">
+                <svg viewBox="0 0 300 180" class="h-12 w-auto transition-colors duration-300" id="brand-logo" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path id="logo-frame" d="M150,40 L220,100 L80,100 Z" stroke="white" stroke-width="2.5" fill="none" />
+                    <path id="logo-fill" d="M150,55 L200,98 L100,98 Z" fill="white" opacity="0.8" />
+                    <rect id="logo-door" x="142" y="80" width="16" height="18" fill="#022c22" rx="1" />
+                    <path d="M60,100 L75,70 L90,100" class="fill-emerald-200" opacity="0.6"/>
+                    <path d="M210,100 L225,70 L240,100" class="fill-emerald-200" opacity="0.6"/>
+                    <text id="logo-text" x="150" y="140" text-anchor="middle" font-family="Playfair Display" font-weight="400" font-size="32" fill="white" letter-spacing="4">LOS PELAITOS</text>
+                    <text id="logo-sub" x="150" y="158" text-anchor="middle" font-family="Lato" font-weight="300" font-size="7" fill="#d1fae5" letter-spacing="5" style="text-transform: uppercase">Refugio Natural</text>
+                </svg>
+            </a>
+            
+            <!-- MENU DESKTOP -->
+            <div id="menu-desktop" class="hidden md:flex gap-8 items-center text-sm font-medium tracking-widest uppercase text-white">
+                <a href="#experiencia" class="hover:text-emerald-400 transition-colors">Experiencia</a>
+                <a href="#comodidades" class="hover:text-emerald-400 transition-colors">Espacios</a>
+                <a href="#disponibilidad" class="hover:text-emerald-400 transition-colors">Disponibilidad</a>
+                <a href="#ubicacion" class="hover:text-emerald-400 transition-colors">Ubicación</a>
+                <a href="#reservar" id="btn-reservar-nav" class="px-6 py-3 border border-white text-white hover:bg-white hover:text-stone-900 transition-all duration-300">
+                    Reservar
+                </a>
+            </div>
+
+            <!-- MENU MOBILE BUTTON -->
+            <button id="menu-btn" class="md:hidden text-white">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU OVERLAY -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-stone-900 text-stone-100 flex flex-col items-center justify-center space-y-8 transform translate-y-[-100%] transition-transform duration-300">
+        <button id="close-menu-btn" class="absolute top-6 right-6 text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
+        <a onclick="closeMenu()" href="#experiencia" class="text-2xl font-serif">Experiencia</a>
+        <a onclick="closeMenu()" href="#comodidades" class="text-2xl font-serif">Espacios</a>
+        <a onclick="closeMenu()" href="#disponibilidad" class="text-2xl font-serif">Disponibilidad</a>
+        <a onclick="closeMenu()" href="#ubicacion" class="text-2xl font-serif">Ubicación</a>
+        <a onclick="closeMenu()" href="#reservar" class="text-xl px-8 py-3 border border-stone-100 mt-4">Reservar Estancia</a>
+    </div>
+
+    <!-- 1. HERO SECTION -->
+    <header class="relative h-screen w-full overflow-hidden flex items-center justify-center">
+        <!-- VIDEO -->
+        <div class="absolute inset-0 z-0">
+            <video autoplay loop muted playsinline class="w-full h-full object-cover">
+                <!-- ASEGÚRATE DE QUE ESTE ARCHIVO ESTÉ EN LA MISMA CARPETA -->
+                <source src="Cabana-Los-Peladitos.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-stone-950/40 mix-blend-multiply"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-stone-950/30"></div>
+        </div>
+
+        <!-- CONTENIDO -->
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto flex flex-col items-center gap-6 animate-fade-in-up">
+            <div class="flex items-center gap-4 mb-2">
+                <div class="h-[1px] w-12 bg-white/60"></div>
+                <span class="text-white/90 text-xs md:text-sm uppercase tracking-[0.3em] font-light">Sabanagrande, Atlántico</span>
+                <div class="h-[1px] w-12 bg-white/60"></div>
+            </div>
+            
+            <h1 class="font-serif text-5xl md:text-8xl text-white leading-tight drop-shadow-lg">
+                Cabaña <br />
+                <span class="italic font-light">Los Pelaitos</span>
+            </h1>
+            
+            <p class="text-stone-200 text-lg md:text-xl font-light max-w-lg leading-relaxed mt-4 mb-8 text-shadow">
+                Donde la naturaleza se encuentra con la exclusividad. Un santuario privado a solo 15 minutos de la ciudad.
+            </p>
+
+            <div class="flex flex-col md:flex-row gap-6">
+                <a href="#tour360" class="group flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white transition-all hover:bg-white hover:text-stone-900">
+                    <span class="uppercase tracking-widest text-xs font-bold">Tour Virtual</span>
+                    <i data-lucide="maximize-2" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
+                </a>
+                <a href="#reservar" class="px-8 py-4 bg-emerald-950 text-white border border-emerald-950 hover:bg-emerald-900 transition-all uppercase tracking-widest text-xs font-bold flex items-center gap-2">
+                    Reservar Ahora
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-white/50">
+            <div class="w-[1px] h-16 bg-gradient-to-b from-transparent via-white to-transparent"></div>
+        </div>
+    </header>
+
+    <!-- 2. TOUR 360 -->
+    <section id="tour360" class="py-24 bg-stone-900 text-stone-100 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                <div>
+                    <span class="text-emerald-500 uppercase tracking-widest text-xs font-bold mb-2 block">Inmersión Total</span>
+                    <h2 class="font-serif text-4xl md:text-5xl">Explora cada rincón</h2>
+                </div>
+                <p class="text-stone-400 max-w-md text-sm leading-relaxed">
+                    Recorre la propiedad desde tu dispositivo antes de llegar. Descubre la amplitud de nuestros espacios sociales y la privacidad de nuestras habitaciones.
+                </p>
+            </div>
+
+            <div class="w-full aspect-[16/9] md:aspect-[21/9] bg-stone-800 border border-white/5 shadow-2xl relative group overflow-hidden">
+                <div class="absolute inset-0 flex flex-col items-center justify-center bg-stone-800 transition-opacity duration-500 group-hover:opacity-0 pointer-events-none z-20">
+                    <i data-lucide="maximize-2" class="w-12 h-12 text-white/20 mb-4"></i>
+                    <p class="uppercase tracking-widest text-xs text-white/40">Interactúa para explorar</p>
+                </div>
+                <!-- IFRAME REAL -->
+                <div class="w-full h-full flex items-center justify-center bg-stone-900 text-stone-600">
+                    <span class="font-mono text-xs border border-stone-700 px-4 py-2 rounded">AQUÍ PEGAR CÓDIGO IFRAME 360</span>
+                </div>
+            </div>
+        </div>
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-emerald-900/10 to-transparent pointer-events-none"></div>
+    </section>
+
+    <!-- 3. GALERÍA -->
+    <section id="experiencia" class="bg-stone-100 py-24">
+        <div class="max-w-7xl mx-auto px-6 mb-16 text-center">
+            <h2 class="font-serif text-4xl text-stone-900 mb-4">La Experiencia Los Pelaitos</h2>
+            <div class="w-24 h-[1px] bg-emerald-900 mx-auto opacity-20"></div>
+        </div>
+
+        <div class="relative w-full h-[70vh] bg-stone-200 overflow-hidden group" id="gallery-container">
+            <!-- Las imágenes se inyectan via JS -->
+            <div id="slide-1" class="gallery-slide absolute inset-0 transition-opacity duration-1000 opacity-100">
+                <img src="https://images.unsplash.com/photo-1587595431973-160d0d94add1?auto=format&fit=crop&q=80&w=1600" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/20"></div>
+                <div class="absolute bottom-0 left-0 p-12 md:p-24 text-white">
+                    <p class="uppercase tracking-[0.3em] text-xs md:text-sm mb-2 opacity-80">Relájate bajo el sol</p>
+                    <h3 class="font-serif text-5xl md:text-7xl">Piscina Infinita</h3>
+                </div>
+            </div>
+            
+            <div id="slide-2" class="gallery-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
+                <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&q=80&w=1600" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/20"></div>
+                <div class="absolute bottom-0 left-0 p-12 md:p-24 text-white">
+                    <p class="uppercase tracking-[0.3em] text-xs md:text-sm mb-2 opacity-80">Diseño y confort</p>
+                    <h3 class="font-serif text-5xl md:text-7xl">Interiores de Lujo</h3>
+                </div>
+            </div>
+
+             <div id="slide-3" class="gallery-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
+                <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=1600" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/20"></div>
+                <div class="absolute bottom-0 left-0 p-12 md:p-24 text-white">
+                    <p class="uppercase tracking-[0.3em] text-xs md:text-sm mb-2 opacity-80">Conecta con el entorno</p>
+                    <h3 class="font-serif text-5xl md:text-7xl">Naturaleza Viva</h3>
+                </div>
+            </div>
+
+            <!-- Controles -->
+            <div class="absolute bottom-12 right-12 z-20 flex gap-4">
+                <button onclick="prevSlide()" class="p-4 bg-white/10 backdrop-blur border border-white/20 text-white hover:bg-white hover:text-stone-900 transition-all"><i data-lucide="chevron-left" class="w-6 h-6"></i></button>
+                <button onclick="nextSlide()" class="p-4 bg-white/10 backdrop-blur border border-white/20 text-white hover:bg-white hover:text-stone-900 transition-all"><i data-lucide="chevron-right" class="w-6 h-6"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. AMENITIES -->
+    <section id="comodidades" class="py-24 max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <span class="text-emerald-900/60 uppercase tracking-widest text-xs font-bold mb-4 block">Detalles que importan</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-stone-900 mb-8 leading-tight">
+                    Diseñado para el <br/><span class="italic text-emerald-800">confort absoluto</span>
+                </h2>
+                <p class="text-stone-500 mb-8 text-lg font-light leading-relaxed">
+                    Cada elemento de Cabaña Los Pelaitos ha sido seleccionado para ofrecer una estadía sin preocupaciones. Desde la tecnología hasta el mobiliario, todo está pensado para ti.
+                </p>
+                <a href="#reservar" class="inline-block border-b border-emerald-900 pb-1 text-emerald-900 uppercase tracking-widest text-xs hover:opacity-70 transition-opacity">
+                    Ver lista completa
+                </a>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Item -->
+                <div class="p-8 bg-white border border-stone-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+                    <div class="text-emerald-900 mb-4 group-hover:scale-110 transition-transform"><i data-lucide="wind" class="w-6 h-6"></i></div>
+                    <h4 class="font-serif text-lg text-stone-900 mb-2">Aire Acondicionado</h4>
+                    <p class="text-stone-400 text-xs uppercase tracking-wide">Climatización total</p>
+                </div>
+                <!-- Item -->
+                <div class="p-8 bg-white border border-stone-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+                    <div class="text-emerald-900 mb-4 group-hover:scale-110 transition-transform"><i data-lucide="wifi" class="w-6 h-6"></i></div>
+                    <h4 class="font-serif text-lg text-stone-900 mb-2">Starlink WiFi</h4>
+                    <p class="text-stone-400 text-xs uppercase tracking-wide">Alta velocidad</p>
+                </div>
+                <!-- Item -->
+                <div class="p-8 bg-white border border-stone-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+                    <div class="text-emerald-900 mb-4 group-hover:scale-110 transition-transform"><i data-lucide="waves" class="w-6 h-6"></i></div>
+                    <h4 class="font-serif text-lg text-stone-900 mb-2">Piscina Privada</h4>
+                    <p class="text-stone-400 text-xs uppercase tracking-wide">Uso exclusivo</p>
+                </div>
+                 <!-- Item -->
+                 <div class="p-8 bg-white border border-stone-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+                    <div class="text-emerald-900 mb-4 group-hover:scale-110 transition-transform"><i data-lucide="coffee" class="w-6 h-6"></i></div>
+                    <h4 class="font-serif text-lg text-stone-900 mb-2">Zona BBQ</h4>
+                    <p class="text-stone-400 text-xs uppercase tracking-wide">Totalmente equipada</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. TARIFAS Y CALENDARIO -->
+    <section id="disponibilidad" class="bg-emerald-950 text-stone-100 py-24 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: url('https://www.transparenttextures.com/patterns/cubes.png');"></div>
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-600 rounded-full blur-[120px] opacity-20 translate-x-1/2 -translate-y-1/2"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row gap-16">
+                <!-- TARIFAS -->
+                <div class="lg:w-1/2 space-y-12">
+                    <div>
+                        <h2 class="font-serif text-4xl md:text-5xl mb-6">Planes Exclusivos</h2>
+                        <p class="text-emerald-100/60 font-light max-w-md">Selecciona la experiencia que mejor se adapte a tu grupo. Precios transparentes, sin sorpresas.</p>
+                    </div>
+
+                    <div class="space-y-6">
+                        <!-- Card 1 -->
+                        <div class="bg-white/5 backdrop-blur border border-white/10 p-8 hover:bg-white/10 transition-colors cursor-pointer group">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="font-serif text-2xl">Pasadía Solar</h3>
+                                <span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 text-xs uppercase tracking-widest rounded-full">Popular</span>
+                            </div>
+                            <div class="flex items-baseline gap-2 mb-4">
+                                <span class="text-4xl font-light">$50.000</span>
+                                <span class="text-sm text-white/50">/ persona</span>
+                            </div>
+                            <ul class="text-sm text-emerald-100/70 space-y-2 mb-6">
+                                <li class="flex gap-2"><div class="w-1 h-1 bg-emerald-400 rounded-full mt-2"></div> 9:00 AM - 5:00 PM</li>
+                                <li class="flex gap-2"><div class="w-1 h-1 bg-emerald-400 rounded-full mt-2"></div> Acceso total a zonas húmedas</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Card 2 -->
+                        <div class="bg-gradient-to-br from-emerald-900 to-emerald-950 border border-emerald-700/50 p-8 shadow-2xl relative overflow-hidden group transform hover:scale-[1.01] transition-transform duration-300">
+                            <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                <i data-lucide="star" class="w-16 h-16"></i>
+                            </div>
+                            <h3 class="font-serif text-2xl text-white mb-2">Estadía Completa</h3>
+                            <p class="text-emerald-200/80 text-sm mb-6">La experiencia definitiva. Día y noche.</p>
+                            <div class="flex items-baseline gap-2 mb-6">
+                                <span class="text-5xl font-serif font-medium text-white">$70.000</span>
+                                <span class="text-sm text-emerald-200/50">/ persona</span>
+                            </div>
+                            <a href="#reservar" class="block w-full text-center py-4 bg-white text-emerald-950 uppercase tracking-widest text-xs font-bold hover:bg-emerald-100 transition-colors">
+                                Seleccionar Plan
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CALENDARIO -->
+                <div class="lg:w-1/2 lg:pl-12 flex flex-col justify-center">
+                    <div class="mb-8 text-right lg:text-left">
+                        <span class="text-emerald-400 uppercase tracking-widest text-xs font-bold mb-2 block">Planea con tiempo</span>
+                        <p class="text-stone-300 font-light">Verifica la disponibilidad en tiempo real.</p>
+                    </div>
+                    
+                    <!-- CALENDARIO CONTAINER -->
+                    <div class="bg-white/80 backdrop-blur-xl p-8 rounded-t-3xl border border-stone-200 shadow-2xl relative z-20 text-stone-800">
+                        <div class="flex justify-between items-center mb-8">
+                            <h3 id="month-display" class="text-2xl font-serif text-emerald-950 capitalize tracking-wide">
+                                <!-- JS llenará esto -->
+                            </h3>
+                            <div class="flex gap-4">
+                                <button onclick="changeMonth(-1)" id="prev-month" class="p-2 rounded-full border border-stone-200 hover:bg-emerald-950 hover:text-white transition-all disabled:opacity-30"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                                <button onclick="changeMonth(1)" id="next-month" class="p-2 rounded-full border border-stone-200 hover:bg-emerald-950 hover:text-white transition-all disabled:opacity-30"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-7 text-center mb-4 text-xs font-bold text-emerald-800 uppercase tracking-widest">
+                            <span>Do</span><span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sá</span>
+                        </div>
+                        
+                        <div id="calendar-grid" class="grid grid-cols-7 gap-y-2">
+                            <!-- JS llenará los días -->
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-stone-100 flex justify-center gap-8 text-xs uppercase tracking-widest text-stone-500">
+                            <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-emerald-500"></div> Disponible</div>
+                            <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-stone-300"></div> Ocupado</div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-center text-xs text-white/30 mt-6 uppercase tracking-wider">* Las fechas se actualizan cada 24 horas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. UBICACIÓN -->
+    <section id="ubicacion" class="py-24 bg-stone-100 relative">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div class="order-2 md:order-1">
+                <div class="w-full h-[400px] bg-stone-300 rounded-2xl overflow-hidden relative shadow-lg group">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31351.49479389279!2d-74.76451559999999!3d10.809461!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef42d63e9e1c3b1%3A0xe5f8e5b5e5e5e5e5!2sSabanagrande%2C%20Atl%C3%A1ntico!5e0!3m2!1ses!2sco!4v1620000000000!5m2!1ses!2sco" 
+                        width="100%" height="100%" 
+                        style="border:0; filter: grayscale(100%) invert(10%) contrast(80%);" 
+                        allowfullscreen="" loading="lazy" 
+                        class="opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                    </iframe>
+                    <div class="absolute top-4 right-4 bg-white p-3 rounded-full shadow-md z-10 text-emerald-900">
+                        <i data-lucide="map-pin" class="w-6 h-6"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-1 md:order-2">
+                <span class="text-emerald-900/60 uppercase tracking-widest text-xs font-bold mb-4 block">Ubicación Privilegiada</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-emerald-950 mb-6">Fácil de llegar,<br/> difícil de olvidar</h2>
+                <p class="text-stone-500 text-lg font-light mb-8 leading-relaxed">
+                    Estamos ubicados en Sabanagrande, Atlántico, a solo 15 minutos del aeropuerto y con vías de acceso pavimentadas hasta la entrada.
+                </p>
+                <a href="https://maps.app.goo.gl/N959x7dAkn9LVDTq5" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 bg-emerald-950 text-white px-8 py-4 uppercase tracking-widest text-xs font-bold hover:bg-emerald-900 transition-all shadow-xl group">
+                    <i data-lucide="map" class="w-4 h-4 group-hover:animate-bounce"></i>
+                    Cómo llegar
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. CTA FINAL -->
+    <section id="reservar" class="py-32 bg-white text-center relative border-t border-stone-100">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="font-serif text-5xl md:text-6xl text-emerald-950 mb-8">¿Listo para escapar?</h2>
+            <p class="text-stone-500 text-lg mb-12 max-w-xl mx-auto font-light">
+                La naturaleza te espera. Reserva tu fecha hoy mismo a través de nuestro canal directo de WhatsApp.
+            </p>
+            <a href="https://wa.me/573000000000" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-4 bg-emerald-950 text-white px-12 py-6 text-sm uppercase tracking-widest hover:bg-emerald-900 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1">
+                <i data-lucide="phone" class="w-4 h-4"></i>
+                Iniciar Reserva
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-stone-950 text-stone-300 py-16 text-sm font-light border-t border-stone-800">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
+            <div class="col-span-1 md:col-span-2">
+                <h4 class="font-serif text-xl text-white mb-4">Cabaña Los Pelaitos</h4>
+                <p class="max-w-xs leading-relaxed text-stone-400">
+                    Un refugio exclusivo diseñado para desconectar de la rutina y reconectar con lo esencial. Sabanagrande, Atlántico.
+                </p>
+            </div>
+            
+            <div>
+                <h4 class="text-white uppercase tracking-widest text-xs font-bold mb-6">Explorar</h4>
+                <ul class="space-y-4 text-stone-300">
+                    <li><a href="#experiencia" class="hover:text-emerald-400 transition-colors">La Cabaña</a></li>
+                    <li><a href="#galeria" class="hover:text-emerald-400 transition-colors">Galería</a></li>
+                    <li><a href="#comodidades" class="hover:text-emerald-400 transition-colors">Servicios</a></li>
+                    <li><a href="#ubicacion" class="hover:text-emerald-400 transition-colors">Ubicación</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white uppercase tracking-widest text-xs font-bold mb-6">Social</h4>
+                <div class="flex gap-4">
+                    <a href="https://instagram.com" target="_blank" class="p-3 border border-stone-700 rounded-full hover:border-emerald-500 hover:text-emerald-500 transition-all text-white"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    <a href="https://facebook.com" target="_blank" class="p-3 border border-stone-700 rounded-full hover:border-emerald-500 hover:text-emerald-500 transition-all text-white"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                    <a href="https://wa.me/573000000000" target="_blank" class="p-3 border border-stone-700 rounded-full hover:border-green-500 hover:text-green-500 transition-all text-white"><i data-lucide="message-circle" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-stone-900 flex flex-col md:flex-row justify-between items-center text-stone-500 text-xs uppercase tracking-wider">
+            <p>© 2023 Cabaña Los Pelaitos.</p>
+            <p>Diseño y Desarrollo Exclusivo</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- INICIALIZAR ICONOS ---
+        lucide.createIcons();
+
+        // --- NAVBAR SCROLL EFFECT ---
+        const navbar = document.getElementById('navbar');
+        const brandLogo = document.getElementById('brand-logo');
+        const logoFrame = document.getElementById('logo-frame');
+        const logoText = document.getElementById('logo-text');
+        const logoSub = document.getElementById('logo-sub');
+        const logoFill = document.getElementById('logo-fill');
+        const menuDesktop = document.getElementById('menu-desktop');
+        const btnReservarNav = document.getElementById('btn-reservar-nav');
+        const menuBtn = document.getElementById('menu-btn');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                // Scrolled State (Fondo Blanco)
+                navbar.classList.add('bg-white/90', 'backdrop-blur-md', 'shadow-sm');
+                navbar.classList.remove('py-6', 'bg-transparent');
+                navbar.classList.add('py-4');
+                
+                // Logo Colors
+                logoFrame.setAttribute('stroke', '#022c22');
+                logoText.setAttribute('fill', '#022c22');
+                logoSub.setAttribute('fill', '#065f46');
+                logoFill.setAttribute('fill', '#022c22');
+                
+                // Menu Text Colors
+                menuDesktop.classList.remove('text-white');
+                menuDesktop.classList.add('text-stone-800');
+                
+                // Button
+                btnReservarNav.classList.replace('border-white', 'border-emerald-900');
+                btnReservarNav.classList.replace('text-white', 'text-emerald-900');
+                btnReservarNav.classList.add('hover:bg-emerald-900', 'hover:text-white');
+                btnReservarNav.classList.remove('hover:bg-white', 'hover:text-stone-900');
+
+                // Mobile Btn
+                menuBtn.classList.remove('text-white');
+                menuBtn.classList.add('text-stone-900');
+            } else {
+                // Top State (Transparente)
+                navbar.classList.remove('bg-white/90', 'backdrop-blur-md', 'shadow-sm', 'py-4');
+                navbar.classList.add('py-6', 'bg-transparent');
+                
+                // Logo Colors
+                logoFrame.setAttribute('stroke', 'white');
+                logoText.setAttribute('fill', 'white');
+                logoSub.setAttribute('fill', '#d1fae5');
+                logoFill.setAttribute('fill', 'white');
+                
+                // Menu Text Colors
+                menuDesktop.classList.add('text-white');
+                menuDesktop.classList.remove('text-stone-800');
+
+                // Button
+                btnReservarNav.classList.replace('border-emerald-900', 'border-white');
+                btnReservarNav.classList.replace('text-emerald-900', 'text-white');
+                btnReservarNav.classList.remove('hover:bg-emerald-900', 'hover:text-white');
+                btnReservarNav.classList.add('hover:bg-white', 'hover:text-stone-900');
+
+                 // Mobile Btn
+                 menuBtn.classList.add('text-white');
+                 menuBtn.classList.remove('text-stone-900');
+            }
+        });
+
+        // --- MOBILE MENU ---
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('translate-y-[-100%]');
+        });
+
+        closeMenuBtn.addEventListener('click', closeMenu);
+
+        function closeMenu() {
+            mobileMenu.classList.add('translate-y-[-100%]');
+        }
+
+        // --- CAROUSEL LOGIC ---
+        let currentSlide = 1;
+        const totalSlides = 3;
+
+        function showSlide(n) {
+            // Ocultar todos
+            for(let i=1; i<=totalSlides; i++) {
+                const el = document.getElementById(`slide-${i}`);
+                el.classList.remove('opacity-100', 'z-10');
+                el.classList.add('opacity-0');
+            }
+            // Mostrar actual
+            const current = document.getElementById(`slide-${n}`);
+            current.classList.remove('opacity-0');
+            current.classList.add('opacity-100', 'z-10');
+        }
+
+        function nextSlide() {
+            currentSlide = currentSlide === totalSlides ? 1 : currentSlide + 1;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = currentSlide === 1 ? totalSlides : currentSlide - 1;
+            showSlide(currentSlide);
+        }
+
+        // Auto play carousel
+        setInterval(nextSlide, 5000);
+
+
+        // --- CALENDAR LOGIC (VANILLA JS) ---
+        const monthDisplay = document.getElementById('month-display');
+        const calendarGrid = document.getElementById('calendar-grid');
+        const prevMonthBtn = document.getElementById('prev-month');
+        const nextMonthBtn = document.getElementById('next-month');
+
+        let currentDate = new Date();
+        const today = new Date();
+        const maxDate = new Date();
+        maxDate.setMonth(today.getMonth() + 1);
+
+        const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+        // Días simulados ocupados
+        const bookedDates = [
+            '2023-10-15', '2023-10-16', '2023-10-25', 
+            '2023-11-05', '2023-11-06'
+        ];
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+
+            // Actualizar título
+            monthDisplay.innerHTML = `${monthNames[month]} <span class="text-stone-400 font-sans text-lg">${year}</span>`;
+
+            // Limpiar grid
+            calendarGrid.innerHTML = '';
+
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const firstDayIndex = new Date(year, month, 1).getDay();
+
+            // Celdas vacías
+            for(let i=0; i<firstDayIndex; i++) {
+                const emptyCell = document.createElement('div');
+                calendarGrid.appendChild(emptyCell);
+            }
+
+            // Días
+            for(let d=1; d<=daysInMonth; d++) {
+                const dateString = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                const cell = document.createElement('div');
+                cell.className = "h-10 w-10 md:h-12 md:w-12 mx-auto flex items-center justify-center rounded-full text-sm font-medium transition-all duration-300";
+                
+                const isPast = new Date(year, month, d) < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                const isBooked = bookedDates.includes(dateString);
+
+                if (isPast) {
+                    cell.classList.add('text-stone-300', 'cursor-not-allowed');
+                } else if (isBooked) {
+                    cell.classList.add('bg-stone-100', 'text-stone-300', 'line-through', 'cursor-not-allowed');
+                } else {
+                    cell.classList.add('hover:bg-emerald-50', 'text-stone-700', 'cursor-pointer', 'border', 'border-transparent', 'hover:border-emerald-200');
+                }
+
+                cell.innerText = d;
+                calendarGrid.appendChild(cell);
+            }
+
+            // Control de botones
+            prevMonthBtn.disabled = currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear();
+            nextMonthBtn.disabled = currentDate.getMonth() === maxDate.getMonth() && currentDate.getFullYear() === maxDate.getFullYear();
+            
+            // Estilo visual disabled
+            prevMonthBtn.style.opacity = prevMonthBtn.disabled ? '0.3' : '1';
+            nextMonthBtn.style.opacity = nextMonthBtn.disabled ? '0.3' : '1';
+        }
+
+        function changeMonth(dir) {
+            const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + dir, 1);
+            // Validar límites
+            if (dir < 0 && newDate < new Date(today.getFullYear(), today.getMonth(), 1)) return;
+            if (dir > 0 && newDate > maxDate) return;
+            
+            currentDate = newDate;
+            renderCalendar();
+        }
+
+        // Iniciar Calendario
+        renderCalendar();
+
+    </script>
+</body>
+</html>

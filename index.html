@@ -96,8 +96,13 @@
     <header class="relative h-screen w-full overflow-hidden flex items-center justify-center">
         <!-- VIDEO -->
         <div class="absolute inset-0 z-0">
-            <video autoplay loop muted playsinline class="w-full h-full object-cover">
-                <!-- ASEGÚRATE DE QUE ESTE ARCHIVO ESTÉ EN LA MISMA CARPETA -->
+            <!-- 
+               NOTA IMPORTANTE: 
+               1. El archivo 'Cabana-Los-Peladitos.mp4' debe estar en la MISMA CARPETA que este index.html.
+               2. 'poster' es la imagen que se muestra si el video tarda en cargar.
+               3. 'playsinline' es vital para que funcione en iPhone/Android sin irse a pantalla completa.
+            -->
+            <video autoplay loop muted playsinline class="w-full h-full object-cover" poster="https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&q=80&w=2000">
                 <source src="Cabana-Los-Peladitos.mp4" type="video/mp4">
             </video>
             <div class="absolute inset-0 bg-stone-950/40 mix-blend-multiply"></div>
@@ -220,9 +225,21 @@
                 <p class="text-stone-500 mb-8 text-lg font-light leading-relaxed">
                     Cada elemento de Cabaña Los Pelaitos ha sido seleccionado para ofrecer una estadía sin preocupaciones. Desde la tecnología hasta el mobiliario, todo está pensado para ti.
                 </p>
-                <a href="#reservar" class="inline-block border-b border-emerald-900 pb-1 text-emerald-900 uppercase tracking-widest text-xs hover:opacity-70 transition-opacity">
+                
+                <!-- BOTÓN PARA DESPLEGAR LISTA COMPLETA -->
+                <button onclick="toggleAmenities()" id="btn-ver-mas" class="border-b border-emerald-900 pb-1 text-emerald-900 uppercase tracking-widest text-xs hover:opacity-70 transition-opacity focus:outline-none text-left">
                     Ver lista completa
-                </a>
+                </button>
+
+                <!-- LISTA OCULTA -->
+                <div id="amenities-extra" class="hidden mt-6 space-y-3 text-stone-600 bg-white p-6 rounded-lg border border-stone-200 shadow-sm transition-all duration-300">
+                    <p class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Zona de hamacas y relax</p>
+                    <p class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Juegos: Dominó, Jenga, Cartas</p>
+                    <p class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Parqueadero privado seguro</p>
+                    <p class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Cocina integral totalmente dotada</p>
+                    <p class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Kiosco social para eventos</p>
+                    <p class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Cancha de voleibol</p>
+                </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
@@ -269,7 +286,7 @@
                     </div>
 
                     <div class="space-y-6">
-                        <!-- Card 1 -->
+                        <!-- Card 1: PASADÍA SOLAR -->
                         <div class="bg-white/5 backdrop-blur border border-white/10 p-8 hover:bg-white/10 transition-colors cursor-pointer group">
                             <div class="flex justify-between items-start mb-4">
                                 <h3 class="font-serif text-2xl">Pasadía Solar</h3>
@@ -283,9 +300,13 @@
                                 <li class="flex gap-2"><div class="w-1 h-1 bg-emerald-400 rounded-full mt-2"></div> 9:00 AM - 5:00 PM</li>
                                 <li class="flex gap-2"><div class="w-1 h-1 bg-emerald-400 rounded-full mt-2"></div> Acceso total a zonas húmedas</li>
                             </ul>
+                            <!-- BOTÓN AÑADIDO PARA MÓVILES -->
+                            <a href="#reservar" class="block w-full text-center py-4 bg-emerald-900/50 border border-emerald-800 text-white uppercase tracking-widest text-xs font-bold hover:bg-emerald-800 transition-colors">
+                                Seleccionar Plan
+                            </a>
                         </div>
                         
-                        <!-- Card 2 -->
+                        <!-- Card 2: ESTADÍA COMPLETA -->
                         <div class="bg-gradient-to-br from-emerald-900 to-emerald-950 border border-emerald-700/50 p-8 shadow-2xl relative overflow-hidden group transform hover:scale-[1.01] transition-transform duration-300">
                             <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                                 <i data-lucide="star" class="w-16 h-16"></i>
@@ -428,6 +449,22 @@
     <script>
         // --- INICIALIZAR ICONOS ---
         lucide.createIcons();
+        
+        // --- AMENITIES TOGGLE ---
+        function toggleAmenities() {
+            const extra = document.getElementById('amenities-extra');
+            const btn = document.getElementById('btn-ver-mas');
+            
+            if (extra.classList.contains('hidden')) {
+                extra.classList.remove('hidden');
+                // Re-inicializar iconos dentro del contenido nuevo (por si acaso)
+                lucide.createIcons();
+                btn.innerText = "Ver menos";
+            } else {
+                extra.classList.add('hidden');
+                btn.innerText = "Ver lista completa";
+            }
+        }
 
         // --- NAVBAR SCROLL EFFECT ---
         const navbar = document.getElementById('navbar');

@@ -97,10 +97,7 @@
         <!-- VIDEO -->
         <div class="absolute inset-0 z-0">
             <!-- 
-               NOTA IMPORTANTE: 
-               1. El archivo 'Cabana-Los-Peladitos.mp4' debe estar en la MISMA CARPETA que este index.html.
-               2. 'poster' es la imagen que se muestra si el video tarda en cargar.
-               3. 'playsinline' es vital para que funcione en iPhone/Android sin irse a pantalla completa.
+               NOTA: Asegúrate de que 'Cabana-Los-Peladitos.mp4' esté en la misma carpeta.
             -->
             <video autoplay loop muted playsinline class="w-full h-full object-cover" poster="galeria-piscina.jpg">
                 <source src="Cabana-Los-Peladitos.mp4" type="video/mp4">
@@ -177,58 +174,53 @@
             <div class="w-24 h-[1px] bg-emerald-900 mx-auto opacity-20"></div>
         </div>
 
-        <!-- CARRUSEL AUTOMÁTICO SIN BOTONES -->
-        <div class="relative w-full h-[70vh] bg-stone-200 overflow-hidden group" id="gallery-container">
-            <!-- 
-               IMÁGENES DEL CARRUSEL
-               Asegúrate de renombrar tus archivos JPG a estos nombres exactos:
-               1. galeria-piscina.jpg (Foto de la piscina)
-               2. galeria-relax.jpg (Foto de las hamacas)
-               3. galeria-actividades.jpg (Foto del voleibol/juego)
-               4. galeria-habitaciones.jpg (Foto de las camas)
-            -->
-
+        <!-- CARRUSEL TÁCTIL Y RÁPIDO -->
+        <div class="relative w-full h-[70vh] bg-stone-200 overflow-hidden group cursor-pointer" id="gallery-container" onclick="manualNextSlide()">
+            
             <!-- Slide 1: Piscina -->
-            <div id="slide-1" class="gallery-slide absolute inset-0 transition-opacity duration-1000 opacity-100">
+            <div id="slide-1" class="gallery-slide absolute inset-0 transition-opacity duration-700 opacity-100">
                 <img src="galeria-piscina.jpg" class="w-full h-full object-cover" alt="Piscina Cabaña">
                 <div class="absolute inset-0 bg-black/20"></div>
-                <div class="absolute bottom-0 left-0 p-12 md:p-24 text-white">
+                <div class="absolute bottom-0 left-0 p-12 md:p-24 text-white pointer-events-none">
                     <p class="uppercase tracking-[0.3em] text-xs md:text-sm mb-2 opacity-80">Refresca tus sentidos</p>
                     <h3 class="font-serif text-5xl md:text-7xl">Piscina y Diversión</h3>
                 </div>
             </div>
             
             <!-- Slide 2: Hamacas/Relax -->
-            <div id="slide-2" class="gallery-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
+            <div id="slide-2" class="gallery-slide absolute inset-0 transition-opacity duration-700 opacity-0">
                 <img src="galeria-relax.jpg" class="w-full h-full object-cover" alt="Zona de Hamacas">
                 <div class="absolute inset-0 bg-black/20"></div>
-                <div class="absolute bottom-0 left-0 p-12 md:p-24 text-white">
+                <div class="absolute bottom-0 left-0 p-12 md:p-24 text-white pointer-events-none">
                     <p class="uppercase tracking-[0.3em] text-xs md:text-sm mb-2 opacity-80">Desconecta bajo la sombra</p>
                     <h3 class="font-serif text-5xl md:text-7xl">Descanso Natural</h3>
                 </div>
             </div>
 
             <!-- Slide 3: Voleibol/Actividades -->
-             <div id="slide-3" class="gallery-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
+             <div id="slide-3" class="gallery-slide absolute inset-0 transition-opacity duration-700 opacity-0">
                 <img src="galeria-actividades.jpg" class="w-full h-full object-cover" alt="Actividades Voleibol">
                 <div class="absolute inset-0 bg-black/20"></div>
-                <div class="absolute bottom-0 left-0 p-12 md:p-24 text-white">
+                <div class="absolute bottom-0 left-0 p-12 md:p-24 text-white pointer-events-none">
                     <p class="uppercase tracking-[0.3em] text-xs md:text-sm mb-2 opacity-80">Deporte y risas</p>
                     <h3 class="font-serif text-5xl md:text-7xl">Momentos en Grupo</h3>
                 </div>
             </div>
 
             <!-- Slide 4: Habitaciones -->
-             <div id="slide-4" class="gallery-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
+             <div id="slide-4" class="gallery-slide absolute inset-0 transition-opacity duration-700 opacity-0">
                 <img src="galeria-habitaciones.jpg" class="w-full h-full object-cover" alt="Habitaciones Camas">
                 <div class="absolute inset-0 bg-black/20"></div>
-                <div class="absolute bottom-0 left-0 p-12 md:p-24 text-white">
+                <div class="absolute bottom-0 left-0 p-12 md:p-24 text-white pointer-events-none">
                     <p class="uppercase tracking-[0.3em] text-xs md:text-sm mb-2 opacity-80">Espacios amplios y acogedores</p>
                     <h3 class="font-serif text-5xl md:text-7xl">Confort para Todos</h3>
                 </div>
             </div>
-
-            <!-- SIN BOTONES DE CONTROL (Se mueve solo) -->
+            
+            <!-- Indicador visual de "Toque para siguiente" (opcional, sutil) -->
+            <div class="absolute bottom-8 right-8 text-white/50 text-xs uppercase tracking-widest animate-pulse pointer-events-none">
+                Toca para avanzar
+            </div>
         </div>
     </section>
 
@@ -244,12 +236,10 @@
                     Cada elemento de Cabaña Los Pelaitos ha sido seleccionado para ofrecer una estadía sin preocupaciones. Desde la tecnología hasta el mobiliario, todo está pensado para ti.
                 </p>
                 
-                <!-- BOTÓN PARA DESPLEGAR LISTA COMPLETA -->
                 <button onclick="toggleAmenities()" id="btn-ver-mas" class="border-b border-emerald-900 pb-1 text-emerald-900 uppercase tracking-widest text-xs hover:opacity-70 transition-opacity focus:outline-none text-left">
                     Ver lista completa
                 </button>
 
-                <!-- LISTA OCULTA -->
                 <div id="amenities-extra" class="hidden mt-6 space-y-3 text-stone-600 bg-white p-6 rounded-lg border border-stone-200 shadow-sm transition-all duration-300">
                     <p class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Zona de hamacas y relax</p>
                     <p class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Juegos: Dominó, Jenga, Cartas</p>
@@ -261,25 +251,21 @@
             </div>
 
             <div class="grid grid-cols-2 gap-4">
-                <!-- Item -->
                 <div class="p-8 bg-white border border-stone-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
                     <div class="text-emerald-900 mb-4 group-hover:scale-110 transition-transform"><i data-lucide="wind" class="w-6 h-6"></i></div>
                     <h4 class="font-serif text-lg text-stone-900 mb-2">Aire Acondicionado</h4>
                     <p class="text-stone-400 text-xs uppercase tracking-wide">Climatización total</p>
                 </div>
-                <!-- Item -->
                 <div class="p-8 bg-white border border-stone-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
                     <div class="text-emerald-900 mb-4 group-hover:scale-110 transition-transform"><i data-lucide="wifi" class="w-6 h-6"></i></div>
                     <h4 class="font-serif text-lg text-stone-900 mb-2">Starlink WiFi</h4>
                     <p class="text-stone-400 text-xs uppercase tracking-wide">Alta velocidad</p>
                 </div>
-                <!-- Item -->
                 <div class="p-8 bg-white border border-stone-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
                     <div class="text-emerald-900 mb-4 group-hover:scale-110 transition-transform"><i data-lucide="waves" class="w-6 h-6"></i></div>
                     <h4 class="font-serif text-lg text-stone-900 mb-2">Piscina Privada</h4>
                     <p class="text-stone-400 text-xs uppercase tracking-wide">Uso exclusivo</p>
                 </div>
-                 <!-- Item -->
                  <div class="p-8 bg-white border border-stone-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
                     <div class="text-emerald-900 mb-4 group-hover:scale-110 transition-transform"><i data-lucide="coffee" class="w-6 h-6"></i></div>
                     <h4 class="font-serif text-lg text-stone-900 mb-2">Zona BBQ</h4>
@@ -381,13 +367,14 @@
         </div>
     </section>
 
-    <!-- 6. UBICACIÓN -->
+    <!-- 6. UBICACIÓN EXACTA -->
     <section id="ubicacion" class="py-24 bg-stone-100 relative">
         <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
             <div class="order-2 md:order-1">
                 <div class="w-full h-[400px] bg-stone-300 rounded-2xl overflow-hidden relative shadow-lg group">
+                    <!-- IFRAME DE MAPA ACTUALIZADO CON BÚSQUEDA ESPECÍFICA -->
                     <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31351.49479389279!2d-74.76451559999999!3d10.809461!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef42d63e9e1c3b1%3A0xe5f8e5b5e5e5e5e5!2sSabanagrande%2C%20Atl%C3%A1ntico!5e0!3m2!1ses!2sco!4v1620000000000!5m2!1ses!2sco" 
+                        src="https://maps.google.com/maps?q=Cabaña+Los+Pelaitos+Sabanagrande&output=embed" 
                         width="100%" height="100%" 
                         style="border:0; filter: grayscale(100%) invert(10%) contrast(80%);" 
                         allowfullscreen="" loading="lazy" 
@@ -562,9 +549,10 @@
             mobileMenu.classList.add('translate-y-[-100%]');
         }
 
-        // --- CAROUSEL LOGIC ---
+        // --- CAROUSEL LOGIC REFINED ---
         let currentSlide = 1;
-        const totalSlides = 4; // AHORA SON 4 IMÁGENES
+        const totalSlides = 4;
+        let slideInterval;
 
         function showSlide(n) {
             // Ocultar todos
@@ -588,13 +576,18 @@
             showSlide(currentSlide);
         }
 
-        function prevSlide() {
-            currentSlide = currentSlide === 1 ? totalSlides : currentSlide - 1;
-            showSlide(currentSlide);
+        function manualNextSlide() {
+            nextSlide();
+            resetTimer(); // Reinicia el contador para que no salte inmediatamente
         }
 
-        // Auto play carousel (CADA 5 SEGUNDOS)
-        setInterval(nextSlide, 5000);
+        function resetTimer() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 3000); // 3 Segundos (Más rápido)
+        }
+
+        // Start Auto play
+        resetTimer();
 
 
         // --- CALENDAR LOGIC (VANILLA JS) ---
@@ -687,3 +680,4 @@
     </script>
 </body>
 </html>
+

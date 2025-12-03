@@ -102,7 +102,7 @@
                2. 'poster' es la imagen que se muestra si el video tarda en cargar.
                3. 'playsinline' es vital para que funcione en iPhone/Android sin irse a pantalla completa.
             -->
-            <video autoplay loop muted playsinline class="w-full h-full object-cover" poster="https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&q=80&w=2000">
+            <video autoplay loop muted playsinline class="w-full h-full object-cover" poster="galeria-piscina.jpg">
                 <source src="Cabana-Los-Peladitos.mp4" type="video/mp4">
             </video>
             <div class="absolute inset-0 bg-stone-950/40 mix-blend-multiply"></div>
@@ -177,40 +177,58 @@
             <div class="w-24 h-[1px] bg-emerald-900 mx-auto opacity-20"></div>
         </div>
 
+        <!-- CARRUSEL AUTOMÁTICO SIN BOTONES -->
         <div class="relative w-full h-[70vh] bg-stone-200 overflow-hidden group" id="gallery-container">
-            <!-- Las imágenes se inyectan via JS -->
+            <!-- 
+               IMÁGENES DEL CARRUSEL
+               Asegúrate de renombrar tus archivos JPG a estos nombres exactos:
+               1. galeria-piscina.jpg (Foto de la piscina)
+               2. galeria-relax.jpg (Foto de las hamacas)
+               3. galeria-actividades.jpg (Foto del voleibol/juego)
+               4. galeria-habitaciones.jpg (Foto de las camas)
+            -->
+
+            <!-- Slide 1: Piscina -->
             <div id="slide-1" class="gallery-slide absolute inset-0 transition-opacity duration-1000 opacity-100">
-                <img src="https://images.unsplash.com/photo-1587595431973-160d0d94add1?auto=format&fit=crop&q=80&w=1600" class="w-full h-full object-cover">
+                <img src="galeria-piscina.jpg" class="w-full h-full object-cover" alt="Piscina Cabaña">
                 <div class="absolute inset-0 bg-black/20"></div>
                 <div class="absolute bottom-0 left-0 p-12 md:p-24 text-white">
-                    <p class="uppercase tracking-[0.3em] text-xs md:text-sm mb-2 opacity-80">Relájate bajo el sol</p>
-                    <h3 class="font-serif text-5xl md:text-7xl">Piscina Infinita</h3>
+                    <p class="uppercase tracking-[0.3em] text-xs md:text-sm mb-2 opacity-80">Refresca tus sentidos</p>
+                    <h3 class="font-serif text-5xl md:text-7xl">Piscina y Diversión</h3>
                 </div>
             </div>
             
+            <!-- Slide 2: Hamacas/Relax -->
             <div id="slide-2" class="gallery-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
-                <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&q=80&w=1600" class="w-full h-full object-cover">
+                <img src="galeria-relax.jpg" class="w-full h-full object-cover" alt="Zona de Hamacas">
                 <div class="absolute inset-0 bg-black/20"></div>
                 <div class="absolute bottom-0 left-0 p-12 md:p-24 text-white">
-                    <p class="uppercase tracking-[0.3em] text-xs md:text-sm mb-2 opacity-80">Diseño y confort</p>
-                    <h3 class="font-serif text-5xl md:text-7xl">Interiores de Lujo</h3>
+                    <p class="uppercase tracking-[0.3em] text-xs md:text-sm mb-2 opacity-80">Desconecta bajo la sombra</p>
+                    <h3 class="font-serif text-5xl md:text-7xl">Descanso Natural</h3>
                 </div>
             </div>
 
+            <!-- Slide 3: Voleibol/Actividades -->
              <div id="slide-3" class="gallery-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
-                <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=1600" class="w-full h-full object-cover">
+                <img src="galeria-actividades.jpg" class="w-full h-full object-cover" alt="Actividades Voleibol">
                 <div class="absolute inset-0 bg-black/20"></div>
                 <div class="absolute bottom-0 left-0 p-12 md:p-24 text-white">
-                    <p class="uppercase tracking-[0.3em] text-xs md:text-sm mb-2 opacity-80">Conecta con el entorno</p>
-                    <h3 class="font-serif text-5xl md:text-7xl">Naturaleza Viva</h3>
+                    <p class="uppercase tracking-[0.3em] text-xs md:text-sm mb-2 opacity-80">Deporte y risas</p>
+                    <h3 class="font-serif text-5xl md:text-7xl">Momentos en Grupo</h3>
                 </div>
             </div>
 
-            <!-- Controles -->
-            <div class="absolute bottom-12 right-12 z-20 flex gap-4">
-                <button onclick="prevSlide()" class="p-4 bg-white/10 backdrop-blur border border-white/20 text-white hover:bg-white hover:text-stone-900 transition-all"><i data-lucide="chevron-left" class="w-6 h-6"></i></button>
-                <button onclick="nextSlide()" class="p-4 bg-white/10 backdrop-blur border border-white/20 text-white hover:bg-white hover:text-stone-900 transition-all"><i data-lucide="chevron-right" class="w-6 h-6"></i></button>
+            <!-- Slide 4: Habitaciones -->
+             <div id="slide-4" class="gallery-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
+                <img src="galeria-habitaciones.jpg" class="w-full h-full object-cover" alt="Habitaciones Camas">
+                <div class="absolute inset-0 bg-black/20"></div>
+                <div class="absolute bottom-0 left-0 p-12 md:p-24 text-white">
+                    <p class="uppercase tracking-[0.3em] text-xs md:text-sm mb-2 opacity-80">Espacios amplios y acogedores</p>
+                    <h3 class="font-serif text-5xl md:text-7xl">Confort para Todos</h3>
+                </div>
             </div>
+
+            <!-- SIN BOTONES DE CONTROL (Se mueve solo) -->
         </div>
     </section>
 
@@ -546,19 +564,23 @@
 
         // --- CAROUSEL LOGIC ---
         let currentSlide = 1;
-        const totalSlides = 3;
+        const totalSlides = 4; // AHORA SON 4 IMÁGENES
 
         function showSlide(n) {
             // Ocultar todos
             for(let i=1; i<=totalSlides; i++) {
                 const el = document.getElementById(`slide-${i}`);
-                el.classList.remove('opacity-100', 'z-10');
-                el.classList.add('opacity-0');
+                if (el) {
+                    el.classList.remove('opacity-100', 'z-10');
+                    el.classList.add('opacity-0');
+                }
             }
             // Mostrar actual
             const current = document.getElementById(`slide-${n}`);
-            current.classList.remove('opacity-0');
-            current.classList.add('opacity-100', 'z-10');
+            if (current) {
+                current.classList.remove('opacity-0');
+                current.classList.add('opacity-100', 'z-10');
+            }
         }
 
         function nextSlide() {
@@ -571,7 +593,7 @@
             showSlide(currentSlide);
         }
 
-        // Auto play carousel
+        // Auto play carousel (CADA 5 SEGUNDOS)
         setInterval(nextSlide, 5000);
 
 
@@ -599,48 +621,54 @@
             const month = currentDate.getMonth();
 
             // Actualizar título
-            monthDisplay.innerHTML = `${monthNames[month]} <span class="text-stone-400 font-sans text-lg">${year}</span>`;
-
-            // Limpiar grid
-            calendarGrid.innerHTML = '';
-
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const firstDayIndex = new Date(year, month, 1).getDay();
-
-            // Celdas vacías
-            for(let i=0; i<firstDayIndex; i++) {
-                const emptyCell = document.createElement('div');
-                calendarGrid.appendChild(emptyCell);
+            if (monthDisplay) {
+                monthDisplay.innerHTML = `${monthNames[month]} <span class="text-stone-400 font-sans text-lg">${year}</span>`;
             }
 
-            // Días
-            for(let d=1; d<=daysInMonth; d++) {
-                const dateString = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-                const cell = document.createElement('div');
-                cell.className = "h-10 w-10 md:h-12 md:w-12 mx-auto flex items-center justify-center rounded-full text-sm font-medium transition-all duration-300";
-                
-                const isPast = new Date(year, month, d) < new Date(today.getFullYear(), today.getMonth(), today.getDate());
-                const isBooked = bookedDates.includes(dateString);
+            // Limpiar grid
+            if (calendarGrid) {
+                calendarGrid.innerHTML = '';
+            
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                const firstDayIndex = new Date(year, month, 1).getDay();
 
-                if (isPast) {
-                    cell.classList.add('text-stone-300', 'cursor-not-allowed');
-                } else if (isBooked) {
-                    cell.classList.add('bg-stone-100', 'text-stone-300', 'line-through', 'cursor-not-allowed');
-                } else {
-                    cell.classList.add('hover:bg-emerald-50', 'text-stone-700', 'cursor-pointer', 'border', 'border-transparent', 'hover:border-emerald-200');
+                // Celdas vacías
+                for(let i=0; i<firstDayIndex; i++) {
+                    const emptyCell = document.createElement('div');
+                    calendarGrid.appendChild(emptyCell);
                 }
 
-                cell.innerText = d;
-                calendarGrid.appendChild(cell);
+                // Días
+                for(let d=1; d<=daysInMonth; d++) {
+                    const dateString = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                    const cell = document.createElement('div');
+                    cell.className = "h-10 w-10 md:h-12 md:w-12 mx-auto flex items-center justify-center rounded-full text-sm font-medium transition-all duration-300";
+                    
+                    const isPast = new Date(year, month, d) < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                    const isBooked = bookedDates.includes(dateString);
+
+                    if (isPast) {
+                        cell.classList.add('text-stone-300', 'cursor-not-allowed');
+                    } else if (isBooked) {
+                        cell.classList.add('bg-stone-100', 'text-stone-300', 'line-through', 'cursor-not-allowed');
+                    } else {
+                        cell.classList.add('hover:bg-emerald-50', 'text-stone-700', 'cursor-pointer', 'border', 'border-transparent', 'hover:border-emerald-200');
+                    }
+
+                    cell.innerText = d;
+                    calendarGrid.appendChild(cell);
+                }
             }
 
             // Control de botones
-            prevMonthBtn.disabled = currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear();
-            nextMonthBtn.disabled = currentDate.getMonth() === maxDate.getMonth() && currentDate.getFullYear() === maxDate.getFullYear();
-            
-            // Estilo visual disabled
-            prevMonthBtn.style.opacity = prevMonthBtn.disabled ? '0.3' : '1';
-            nextMonthBtn.style.opacity = nextMonthBtn.disabled ? '0.3' : '1';
+            if (prevMonthBtn && nextMonthBtn) {
+                prevMonthBtn.disabled = currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear();
+                nextMonthBtn.disabled = currentDate.getMonth() === maxDate.getMonth() && currentDate.getFullYear() === maxDate.getFullYear();
+                
+                // Estilo visual disabled
+                prevMonthBtn.style.opacity = prevMonthBtn.disabled ? '0.3' : '1';
+                nextMonthBtn.style.opacity = nextMonthBtn.disabled ? '0.3' : '1';
+            }
         }
 
         function changeMonth(dir) {

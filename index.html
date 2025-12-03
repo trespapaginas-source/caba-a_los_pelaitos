@@ -217,7 +217,7 @@
                 </div>
             </div>
             
-            <!-- Indicador visual de "Toque para siguiente" (opcional, sutil) -->
+            <!-- Indicador visual de "Toque para siguiente" -->
             <div class="absolute bottom-8 right-8 text-white/50 text-xs uppercase tracking-widest animate-pulse pointer-events-none">
                 Toca para avanzar
             </div>
@@ -454,6 +454,12 @@
     <script>
         // --- INICIALIZAR ICONOS ---
         lucide.createIcons();
+
+        // --- FORZAR SCROLL AL INICIO ---
+        window.addEventListener('load', () => {
+             // Pequeño timeout para ganar la carrera al navegador
+             setTimeout(() => window.scrollTo(0, 0), 10);
+        });
         
         // --- AMENITIES TOGGLE ---
         function toggleAmenities() {
@@ -680,4 +686,5 @@
     </script>
 </body>
 </html>
+
 

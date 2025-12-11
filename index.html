@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cabaña Los Pelaitos | Refugio Natural</title>
     
-    <!-- 1. TAILWIND CSS -->
+    <!-- 1. TAILWIND CSS (Diseño) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- 2. FUENTES -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- 2. FLATPICKR (CALENDARIO AVANZADO) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/es.js"></script>
 
-    <!-- 3. CONFIGURACIÓN -->
+    <!-- 3. CONFIGURACIÓN DE ESTILOS -->
     <script>
         tailwind.config = {
             theme: {
@@ -23,36 +23,55 @@
                         serif: ['Playfair Display', 'serif'],
                     },
                     colors: {
-                        emerald: { 950: '#022c22' },
-                        gold: { 500: '#d4af37' }
+                        emerald: {
+                            950: '#022c22',
+                        },
+                        gold: {
+                            500: '#d4af37',
+                        }
                     }
                 }
             }
         }
     </script>
 
-    <!-- 4. ICONOS -->
+    <!-- 4. ICONOS LUCIDE -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
+        /* Estilos base */
         ::selection { background-color: #a7f3d0; color: #022c22; }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f5f5f4; }
         ::-webkit-scrollbar-thumb { background: #064e3b; border-radius: 4px; }
-        input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; opacity: 0.6; }
+        
+        /* Animaciones */
         .fade-in { animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Animación personalizada para el ícono 360 */
+        /* Animación 360 */
         .spin-slow { animation: spin 8s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* Estilos Calendario */
+        .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange {
+            background: #022c22 !important; border-color: #022c22 !important;
+        }
+        /* Días bloqueados (Google Calendar) */
+        .flatpickr-day.disabled { background: #f3f4f6; color: #cbd5e1; text-decoration: line-through; cursor: not-allowed; }
     </style>
+    
+    <!-- FUENTES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body class="bg-stone-50 text-stone-800 antialiased selection:bg-emerald-200 selection:text-emerald-950">
 
     <!-- NAVBAR -->
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-6 bg-transparent">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <!-- LOGO SVG -->
             <a href="#" class="cursor-pointer group">
                 <svg viewBox="0 0 300 180" class="h-12 w-auto transition-colors duration-300" id="brand-logo" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path id="logo-frame" d="M150,40 L220,100 L80,100 Z" stroke="white" stroke-width="2.5" fill="none" />
@@ -65,6 +84,7 @@
                 </svg>
             </a>
             
+            <!-- MENU DESKTOP -->
             <div id="menu-desktop" class="hidden md:flex gap-8 items-center text-sm font-medium tracking-widest uppercase text-white">
                 <a href="#experiencia" class="hover:text-emerald-400 transition-colors">Experiencia</a>
                 <a href="#comodidades" class="hover:text-emerald-400 transition-colors">Espacios</a>
@@ -75,13 +95,14 @@
                 </a>
             </div>
 
+            <!-- MENU MOBILE BUTTON -->
             <button id="menu-btn" class="md:hidden text-white">
                 <i data-lucide="menu" class="w-8 h-8"></i>
             </button>
         </div>
     </nav>
 
-    <!-- MOBILE MENU -->
+    <!-- MOBILE MENU OVERLAY -->
     <div id="mobile-menu" class="fixed inset-0 z-40 bg-stone-900 text-stone-100 flex flex-col items-center justify-center space-y-8 transform translate-y-[-100%] transition-transform duration-300">
         <button id="close-menu-btn" class="absolute top-6 right-6 text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
         <a onclick="closeMenu()" href="#experiencia" class="text-2xl font-serif">Experiencia</a>
@@ -90,9 +111,11 @@
         <a onclick="closeMenu()" href="#ubicacion" class="text-2xl font-serif">Ubicación</a>
     </div>
 
-    <!-- 1. HERO -->
+    <!-- 1. HERO SECTION -->
     <header class="relative h-screen w-full overflow-hidden flex items-center justify-center">
+        <!-- VIDEO DE FONDO -->
         <div class="absolute inset-0 z-0">
+            <!-- NOTA: Asegúrate que el video 'Cabana-Los-Peladitos.mp4' esté en la misma carpeta -->
             <video autoplay loop muted playsinline class="w-full h-full object-cover" poster="galeria-piscina.jpg">
                 <source src="Cabana-Los-Peladitos.mp4" type="video/mp4">
             </video>
@@ -147,16 +170,9 @@
 
             <div class="w-full aspect-[16/9] md:aspect-[21/9] bg-stone-800 border border-white/5 shadow-2xl relative group overflow-hidden rounded-2xl">
                 
-                <!-- === INICIO: ANIMACIÓN PRÓXIMAMENTE === -->
-                <!-- 
-                     INSTRUCCIONES PARA EL RECORRIDO VIRTUAL:
-                     Cuando tengas el código del recorrido (iframe), BORRA todo el bloque 
-                     que está DEBAJO de esta línea hasta donde dice "FIN: ANIMACIÓN".
-                     Luego pega tu código <iframe src="..." ...></iframe> en su lugar.
-                -->
+                <!-- === ANIMACIÓN PRÓXIMAMENTE === -->
                 <div class="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-stone-800 to-stone-900 z-20">
                     <div class="relative mb-6">
-                        <!-- Círculos decorativos -->
                         <div class="absolute inset-0 bg-emerald-500/20 rounded-full blur-xl animate-pulse"></div>
                         <div class="relative p-6 border border-emerald-500/30 rounded-full spin-slow">
                             <i data-lucide="scan" class="w-12 h-12 text-emerald-400"></i>
@@ -173,7 +189,7 @@
                         Estamos capturando cada detalle para que puedas vivir la experiencia desde casa.
                     </p>
                 </div>
-                <!-- === FIN: ANIMACIÓN PRÓXIMAMENTE === -->
+                <!-- === FIN ANIMACIÓN === -->
 
             </div>
         </div>
@@ -187,7 +203,7 @@
         </div>
 
         <div class="relative w-full h-[70vh] bg-stone-200 overflow-hidden group cursor-pointer" onclick="manualNextSlide()">
-            <!-- Slide 1 -->
+            <!-- Slides -->
             <div id="slide-1" class="gallery-slide absolute inset-0 transition-opacity duration-700 opacity-100">
                 <img src="galeria-piscina.jpg" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-black/20"></div>
@@ -195,7 +211,7 @@
                     <h3 class="font-serif text-5xl md:text-7xl">Piscina y Diversión</h3>
                 </div>
             </div>
-            <!-- Slide 2 -->
+            
             <div id="slide-2" class="gallery-slide absolute inset-0 transition-opacity duration-700 opacity-0">
                 <img src="galeria-relax.jpg" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-black/20"></div>
@@ -203,7 +219,7 @@
                     <h3 class="font-serif text-5xl md:text-7xl">Descanso Natural</h3>
                 </div>
             </div>
-             <!-- Slide 3 -->
+
              <div id="slide-3" class="gallery-slide absolute inset-0 transition-opacity duration-700 opacity-0">
                 <img src="galeria-actividades.jpg" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-black/20"></div>
@@ -211,7 +227,7 @@
                     <h3 class="font-serif text-5xl md:text-7xl">Momentos en Grupo</h3>
                 </div>
             </div>
-             <!-- Slide 4 -->
+
              <div id="slide-4" class="gallery-slide absolute inset-0 transition-opacity duration-700 opacity-0">
                 <img src="galeria-habitaciones.jpg" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-black/20"></div>
@@ -219,7 +235,10 @@
                     <h3 class="font-serif text-5xl md:text-7xl">Confort para Todos</h3>
                 </div>
             </div>
-            <div class="absolute bottom-8 right-8 text-white/50 text-xs uppercase tracking-widest animate-pulse pointer-events-none">Toca para avanzar</div>
+            
+            <div class="absolute bottom-8 right-8 text-white/50 text-xs uppercase tracking-widest animate-pulse pointer-events-none">
+                Toca para avanzar
+            </div>
         </div>
     </section>
 
@@ -247,7 +266,6 @@
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-4">
-                <!-- Amenities Icons -->
                 <div class="p-8 bg-white border border-stone-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"><div class="text-emerald-900 mb-4 group-hover:scale-110 transition-transform"><i data-lucide="wind" class="w-6 h-6"></i></div><h4 class="font-serif text-lg text-stone-900 mb-2">Aire Acondicionado</h4><p class="text-stone-400 text-xs uppercase tracking-wide">Climatización total</p></div>
                 <div class="p-8 bg-white border border-stone-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"><div class="text-emerald-900 mb-4 group-hover:scale-110 transition-transform"><i data-lucide="wifi" class="w-6 h-6"></i></div><h4 class="font-serif text-lg text-stone-900 mb-2">Starlink WiFi</h4><p class="text-stone-400 text-xs uppercase tracking-wide">Alta velocidad</p></div>
                 <div class="p-8 bg-white border border-stone-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"><div class="text-emerald-900 mb-4 group-hover:scale-110 transition-transform"><i data-lucide="waves" class="w-6 h-6"></i></div><h4 class="font-serif text-lg text-stone-900 mb-2">Piscina Privada</h4><p class="text-stone-400 text-xs uppercase tracking-wide">Uso exclusivo</p></div>
@@ -256,35 +274,33 @@
         </div>
     </section>
 
-    <!-- 5. ARMA TU PLAN (MOTOR DE RESERVAS) -->
+    <!-- 5. ARMA TU PLAN (SISTEMA DE RESERVAS CONECTADO) -->
     <section id="reservar" class="bg-emerald-950 text-stone-100 py-24 relative overflow-hidden">
         <div class="absolute inset-0 opacity-10" style="background-image: url('https://www.transparenttextures.com/patterns/cubes.png');"></div>
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             
             <div class="text-center mb-12">
                 <h2 class="font-serif text-4xl md:text-5xl mb-4">Arma tu Plan a Medida</h2>
-                <p class="text-emerald-100/60 font-light">Completa los datos de tu grupo para recibir una cotización exacta.</p>
+                <p class="text-emerald-100/60 font-light">Fechas sincronizadas en tiempo real con nuestra disponibilidad.</p>
             </div>
 
             <!-- CONTENEDOR DEL CALCULADOR -->
             <div class="grid lg:grid-cols-12 gap-8 bg-white rounded-3xl p-6 md:p-8 shadow-2xl text-stone-800">
                 
-                <!-- COLUMNA IZQUIERDA: FORMULARIO DETALLADO -->
+                <!-- COLUMNA IZQUIERDA: FORMULARIO -->
                 <div class="lg:col-span-5 space-y-6 border-b lg:border-b-0 lg:border-r border-stone-200 pb-6 lg:pb-0 lg:pr-8">
                     <h3 class="font-serif text-2xl text-emerald-950 mb-4 flex items-center gap-2">
                         <i data-lucide="calendar-check" class="w-6 h-6"></i> 1. Tu Itinerario
                     </h3>
                     
-                    <!-- Fechas -->
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-[10px] font-bold uppercase text-stone-500 mb-1">Entrada</label>
-                            <input type="date" id="date-in" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none text-stone-800 font-bold text-sm" onchange="updateCalc()">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold uppercase text-stone-500 mb-1">Salida</label>
-                            <input type="date" id="date-out" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none text-stone-800 font-bold text-sm" onchange="updateCalc()">
-                        </div>
+                    <div id="loading-calendar" class="text-center text-xs text-emerald-600 font-bold hidden mb-2">
+                        <span class="animate-pulse">⏳ Sincronizando con Google Calendar...</span>
+                    </div>
+
+                    <!-- Fechas con Flatpickr -->
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-stone-500 mb-1">Selecciona tus Fechas</label>
+                        <input id="date-range" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none text-stone-800 font-bold text-center" placeholder="Toque aquí para abrir calendario" readonly>
                     </div>
 
                     <!-- Huéspedes -->
@@ -293,10 +309,6 @@
                             <label class="block text-[10px] font-bold uppercase text-stone-500 mb-1">Adultos</label>
                             <select id="adults" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none text-stone-800 font-bold" onchange="updateCalc()">
                                 <option value="10">10 Adultos (Mínimo)</option>
-                                <option value="11">11 Adultos</option>
-                                <option value="12">12 Adultos</option>
-                                <option value="13">13 Adultos</option>
-                                <option value="14">14 Adultos</option>
                                 <option value="15">15 Adultos</option>
                                 <option value="20">20 Adultos</option>
                                 <option value="25">25 Adultos</option>
@@ -332,6 +344,12 @@
                         </div>
                     </div>
 
+                    <!-- Nombre -->
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-stone-500 mb-1">Tu Nombre Completo</label>
+                        <input id="client-name" type="text" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none text-stone-800 font-bold" placeholder="Para la reserva">
+                    </div>
+
                     <!-- Mascotas -->
                     <div class="flex items-center justify-between p-4 bg-emerald-50 rounded-lg border border-emerald-100">
                         <div class="flex items-center gap-3">
@@ -349,66 +367,38 @@
                 </div>
 
                 <!-- COLUMNA DERECHA: RESULTADOS -->
-                <div class="lg:col-span-7">
-                    <h3 class="font-serif text-2xl text-emerald-950 mb-6 flex items-center gap-2">
-                        <i data-lucide="check-circle" class="w-6 h-6"></i> 2. Elige tu Experiencia
-                    </h3>
-                    
-                    <div class="grid md:grid-cols-2 gap-6">
+                <div class="lg:col-span-7 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-serif text-2xl text-emerald-950 mb-6 flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-6 h-6"></i> 2. Tu Cotización
+                        </h3>
                         
-                        <!-- CARD PASADÍA -->
-                        <div class="border border-stone-200 rounded-xl p-6 hover:border-gold-500 transition-all group relative flex flex-col justify-between">
-                            <div>
-                                <div class="flex justify-between items-start mb-4">
-                                    <h4 class="font-bold text-xl text-emerald-950">Pasadía Solar</h4>
-                                    <span class="bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-1 rounded uppercase">9am - 5pm</span>
-                                </div>
-                                <ul class="text-sm text-stone-500 space-y-2 mb-6">
-                                    <li>• Total Personas: <span id="count-pasadia" class="font-bold">--</span></li>
-                                    <li>• Zonas húmedas y BBQ</li>
-                                    <li>• Sin Amanecida</li>
-                                </ul>
+                        <div class="bg-stone-50 p-6 rounded-xl border border-stone-200 space-y-4">
+                            <div class="flex justify-between border-b border-stone-200 pb-2">
+                                <span class="text-stone-500">Plan Seleccionado:</span>
+                                <span class="font-bold text-emerald-800" id="plan-type">--</span>
                             </div>
-                            <div>
-                                <div class="flex justify-between items-end pt-4 border-t border-stone-100">
-                                    <div class="text-right w-full">
-                                        <p class="text-xs text-stone-400 uppercase">Total Estimado</p>
-                                        <p class="text-3xl font-black text-emerald-900" id="total-pasadia">$0</p>
-                                    </div>
-                                </div>
-                                <button onclick="sendReservation('Pasadía')" class="mt-4 w-full py-3 bg-stone-100 text-emerald-900 font-bold rounded-lg hover:bg-gold-500 hover:text-white transition-colors">
-                                    RESERVAR PASADÍA
-                                </button>
+                            <div class="flex justify-between border-b border-stone-200 pb-2">
+                                <span class="text-stone-500">Duración:</span>
+                                <span class="font-bold" id="nights-count">0 Noches</span>
+                            </div>
+                            <div class="flex justify-between border-b border-stone-200 pb-2">
+                                <span class="text-stone-500">Total Personas:</span>
+                                <span class="font-bold" id="pax-count">0</span>
+                            </div>
+                            <div class="flex justify-between pt-2">
+                                <span class="text-stone-500 font-bold uppercase text-lg">Valor Estimado</span>
+                                <span class="font-black text-4xl text-emerald-900" id="total-price">$0</span>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- CARD ALOJAMIENTO -->
-                        <div class="border-2 border-emerald-900 rounded-xl p-6 shadow-lg bg-emerald-50/20 relative flex flex-col justify-between">
-                            <div class="absolute -top-3 left-6 bg-emerald-900 text-white text-[10px] font-bold px-3 py-1 rounded">PLAN COMPLETO</div>
-                            <div>
-                                <div class="flex justify-between items-start mb-4">
-                                    <h4 class="font-bold text-xl text-emerald-950">Alojamiento</h4>
-                                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded uppercase">24 Horas</span>
-                                </div>
-                                <ul class="text-sm text-stone-500 space-y-2 mb-6">
-                                    <li>• Duración: <span id="nights-count" class="font-bold">1 Noche</span></li>
-                                    <li>• Total Personas: <span id="count-alojamiento" class="font-bold">--</span></li>
-                                    <li>• Aire Acondicionado y Habitaciones</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <div class="flex justify-between items-end pt-4 border-t border-emerald-100">
-                                    <div class="text-right w-full">
-                                        <p class="text-xs text-stone-400 uppercase">Total Estimado</p>
-                                        <p class="text-3xl font-black text-emerald-900" id="total-alojamiento">$0</p>
-                                    </div>
-                                </div>
-                                <button onclick="sendReservation('Alojamiento')" class="mt-4 w-full py-3 bg-emerald-900 text-white font-bold rounded-lg hover:bg-emerald-800 transition-colors">
-                                    RESERVAR ALOJAMIENTO
-                                </button>
-                            </div>
-                        </div>
-
+                    <div class="mt-8">
+                        <button onclick="submitReservation()" id="btn-submit" class="w-full bg-emerald-950 text-white py-4 rounded-xl font-bold shadow-xl hover:bg-emerald-900 transition-all flex justify-center gap-3 items-center transform hover:-translate-y-1">
+                            <i data-lucide="message-circle" class="w-6 h-6"></i>
+                            <span class="text-lg">Confirmar Disponibilidad en WhatsApp</span>
+                        </button>
+                        <p class="text-center text-[10px] text-stone-400 mt-3">Al hacer clic, tus datos se guardan y te contactaremos para confirmar el pago.</p>
                     </div>
                 </div>
             </div>
@@ -470,74 +460,146 @@
     <!-- JAVASCRIPT LOGIC -->
     <script>
         lucide.createIcons();
-        window.addEventListener('load', () => setTimeout(() => window.scrollTo(0, 0), 10));
 
-        // --- LÓGICA DE COTIZACIÓN AVANZADA ---
-        const PRECIO_PASADIA = 50000;
-        const PRECIO_ALOJAMIENTO_NOCHE = 70000;
+        // ==========================================
+        // ⚠️ PEGA AQUÍ TU URL DEL SCRIPT DE GOOGLE
+        // ==========================================
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwf2TMitUkp0ItpWMFRHx6FEYCXxEsa5fSF19TJ-qRp48uvgUY8xXiJk_XktOayDndMnw/exec"; 
+        
+        const PRICE_PASADIA = 50000;
+        const PRICE_ALOJAMIENTO_NOCHE = 70000;
         const formatter = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 });
 
-        function updateCalc() {
-            // 1. Obtener valores
-            const adults = parseInt(document.getElementById('adults').value) || 0;
-            const kidsPaid = parseInt(document.getElementById('kids-paid').value) || 0;
-            const totalPax = adults + kidsPaid;
+        let datePicker;
 
-            // 2. Calcular Noches
-            const dateIn = document.getElementById('date-in').value;
-            const dateOut = document.getElementById('date-out').value;
-            let nights = 1;
+        // 1. CARGAR FECHAS BLOQUEADAS
+        async function initCalendar() {
+            const loader = document.getElementById('loading-calendar');
+            loader.classList.remove('hidden');
 
-            if (dateIn && dateOut) {
-                const d1 = new Date(dateIn);
-                const d2 = new Date(dateOut);
-                const diffTime = Math.abs(d2 - d1);
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-                nights = diffDays > 0 ? diffDays : 1;
+            try {
+                let blockedDates = [];
+                if (GOOGLE_SCRIPT_URL.startsWith("https")) {
+                    const response = await fetch(`${GOOGLE_SCRIPT_URL}?action=getBlockedDates`);
+                    blockedDates = await response.json();
+                    console.log("Fechas bloqueadas:", blockedDates);
+                }
+
+                datePicker = flatpickr("#date-range", {
+                    mode: "range",
+                    minDate: "today",
+                    dateFormat: "Y-m-d",
+                    disable: blockedDates,
+                    locale: "es",
+                    onChange: function(selectedDates) {
+                        updateCalc(selectedDates);
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error calendario:", error);
+                datePicker = flatpickr("#date-range", { mode: "range", minDate: "today", locale: "es", onChange: (sd) => updateCalc(sd) });
+            } finally {
+                loader.classList.add('hidden');
             }
-
-            // 3. Cálculos de Precio
-            const totalPasadia = totalPax * PRECIO_PASADIA; // Pasadía es fijo por día, no por noche
-            const totalAlojamiento = totalPax * PRECIO_ALOJAMIENTO_NOCHE * nights;
-
-            // 4. Actualizar UI
-            document.getElementById('count-pasadia').innerText = `${totalPax}`;
-            document.getElementById('total-pasadia').innerText = formatter.format(totalPasadia);
-
-            document.getElementById('count-alojamiento').innerText = `${totalPax}`;
-            document.getElementById('nights-count').innerText = `${nights} Noche${nights > 1 ? 's' : ''}`;
-            document.getElementById('total-alojamiento').innerText = formatter.format(totalAlojamiento);
         }
 
-        // Ejecutar al inicio
-        updateCalc();
+        // 2. LÓGICA DE PRECIOS
+        function updateCalc(dates) {
+            // Manejo de undefined o null
+            const selectedDates = dates || (datePicker && datePicker.selectedDates) || [];
+            if (selectedDates.length === 0) return;
 
-        // --- ENVIAR A WHATSAPP ---
-        function sendReservation(plan) {
-            const dateIn = document.getElementById('date-in').value;
-            const dateOut = document.getElementById('date-out').value;
+            const adults = parseInt(document.getElementById('adults').value);
+            const kidsPaid = parseInt(document.getElementById('kids-paid').value);
+            const totalPax = adults + kidsPaid;
+
+            let total = 0;
+            let plan = "Pasadía";
+            let nights = 0;
+
+            if (selectedDates.length === 2) {
+                const diffTime = Math.abs(selectedDates[1] - selectedDates[0]);
+                nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+            }
+
+            if (nights > 0) {
+                plan = "Alojamiento";
+                total = totalPax * PRICE_ALOJAMIENTO_NOCHE * nights;
+            } else {
+                plan = "Pasadía";
+                // Si seleccionó solo un día o nada, asume pasadía por 1 día
+                total = totalPax * PRICE_PASADIA;
+            }
+
+            // Actualizar UI
+            document.getElementById('plan-type').innerText = plan;
+            document.getElementById('nights-count').innerText = nights > 0 ? nights : "Día Solar";
+            document.getElementById('pax-count').innerText = totalPax;
+            document.getElementById('total-price').innerText = formatter.format(total);
+        }
+
+        // 3. ENVIAR DATOS
+        function submitReservation() {
+            const name = document.getElementById('client-name').value;
+            const dates = document.getElementById('date-range').value;
             const adults = document.getElementById('adults').value;
             const kidsPaid = document.getElementById('kids-paid').value;
             const kidsFree = document.getElementById('kids-free').value;
             const hasPet = document.getElementById('pets').checked ? "Sí" : "No";
-            const total = document.getElementById(plan === 'Pasadía' ? 'total-pasadia' : 'total-alojamiento').innerText;
+            const total = document.getElementById('total-price').innerText;
+            const plan = document.getElementById('plan-type').innerText;
             const nights = document.getElementById('nights-count').innerText;
 
-            if (!dateIn) { alert("Por favor selecciona una fecha de llegada."); return; }
+            if (!name || !dates) { alert("Por favor completa nombre y fechas."); return; }
+            
+            const btn = document.getElementById('btn-submit');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = "Guardando...";
+            btn.disabled = true;
 
-            let msg = `Hola Cabaña Los Pelaitos! 🌴\n\nEstoy armando mi plan:\n`;
-            msg += `📅 Fechas: ${dateIn} ${plan === 'Alojamiento' ? 'al ' + dateOut : ''} (${nights})\n`;
-            msg += `🎟️ Plan: ${plan}\n`;
-            msg += `👥 Huéspedes: ${adults} Adultos + ${kidsPaid} Niños (5+)\n`;
-            msg += `👶 Niños Pequeños: ${kidsFree}\n`;
-            msg += `🐶 Mascota: ${hasPet}\n`;
-            msg += `💰 Valor Cotizado: ${total}\n\n`;
-            msg += `¿Tienen disponibilidad para estas fechas?`;
+            // Datos para Google Sheet
+            const formData = {
+                client: name,
+                checkIn: dates.split(" to ")[0],
+                checkOut: dates.split(" to ")[1] || dates.split(" to ")[0],
+                pax: parseInt(adults) + parseInt(kidsPaid),
+                plan: plan,
+                total: total
+            };
 
-            window.open(`https://wa.me/573000000000?text=${encodeURIComponent(msg)}`, '_blank');
+            // Enviar a Google
+            if (GOOGLE_SCRIPT_URL.startsWith("https")) {
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+            }
+
+            // WhatsApp msg
+            setTimeout(() => {
+                let msg = `Hola Cabaña Los Pelaitos! 🌴\n\nSoy *${name}* y quiero reservar:\n`;
+                msg += `📅 Fechas: ${dates} (${nights})\n`;
+                msg += `🎟️ Plan: ${plan}\n`;
+                msg += `👥 Huéspedes: ${adults} Adultos + ${kidsPaid} Niños (5+)\n`;
+                msg += `👶 Niños Pequeños: ${kidsFree}\n`;
+                msg += `🐶 Mascota: ${hasPet}\n`;
+                msg += `💰 Valor Cotizado: ${total}\n\n¿Me confirman disponibilidad?`;
+
+                window.open(`https://wa.me/573000000000?text=${encodeURIComponent(msg)}`, '_blank');
+                
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }, 1000);
         }
 
-        // --- FUNCIONES EXTRA (Carrusel, Menú, Toggles) ---
+        // Init
+        initCalendar();
+        updateCalc(); // Calc inicial
+
+        // Funciones extra
         function toggleAmenities() {
             const extra = document.getElementById('amenities-extra');
             const btn = document.getElementById('btn-ver-mas');
@@ -568,25 +630,9 @@
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) {
-                nav.classList.add('bg-white/95', 'shadow-md', 'py-4'); nav.classList.remove('bg-transparent', 'py-6');
-                document.getElementById('logo-text').setAttribute('fill', '#022c22');
-                document.getElementById('logo-frame').setAttribute('stroke', '#022c22');
-                document.getElementById('menu-btn').classList.remove('text-white');
-                document.getElementById('menu-btn').classList.add('text-emerald-950');
-                document.getElementById('menu-desktop').classList.remove('text-white');
-                document.getElementById('menu-desktop').classList.add('text-emerald-950');
-                document.getElementById('btn-reservar-nav').classList.remove('border-white', 'text-white');
-                document.getElementById('btn-reservar-nav').classList.add('border-emerald-950', 'text-emerald-950');
+                nav.classList.add('bg-emerald-950', 'shadow-lg'); nav.classList.remove('bg-transparent');
             } else {
-                nav.classList.remove('bg-white/95', 'shadow-md', 'py-4'); nav.classList.add('bg-transparent', 'py-6');
-                document.getElementById('logo-text').setAttribute('fill', 'white');
-                document.getElementById('logo-frame').setAttribute('stroke', 'white');
-                document.getElementById('menu-btn').classList.add('text-white');
-                document.getElementById('menu-btn').classList.remove('text-emerald-950');
-                document.getElementById('menu-desktop').classList.add('text-white');
-                document.getElementById('menu-desktop').classList.remove('text-emerald-950');
-                document.getElementById('btn-reservar-nav').classList.add('border-white', 'text-white');
-                document.getElementById('btn-reservar-nav').classList.remove('border-emerald-950', 'text-emerald-950');
+                nav.classList.remove('bg-emerald-950', 'shadow-lg'); nav.classList.add('bg-transparent');
             }
         });
     </script>
